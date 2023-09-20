@@ -50,7 +50,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::createDataBase()
 {
-    db.setDatabaseName("/home/ali/Desktop/list.db");
+    QString fileName = QApplication::applicationDirPath() + "/list.db";
+    db.setDatabaseName(fileName);
     if(!db.open())
     {
         qDebug() << "Error";
@@ -145,12 +146,9 @@ void MainWindow::createGui()
 
 void MainWindow::loadButtonOnClicked()
 {
-    QSqlQuery q;
-    q.exec("SELECT * FROM list");
-    QSqlTableModel *m = new QSqlTableModel;
-    m->setQuery(q);
+    QSqlTableModel *m = new QSqlTableModel();
+    m->setQuery("SELECT * FROM list");
     view->setModel(m);
-
 }
 
 void MainWindow::insertButtonOnClicked()
